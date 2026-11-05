@@ -1,7 +1,0 @@
-USEFUL LINKS
-
-https://huggingface.co/datasets/CMU-OSPO/protostar-climate-train-to-2018
-
-https://huggingface.co/spaces/CMU-OSPO/protostar-challenge-climate-risk-intelligence
-
-https://colab.research.google.com/drive/1aL-FJYCIX39cO2reAe9cyTTC5LaPKMO3?usp=sharing#scrollTo=QvWvxXFP0sLU
