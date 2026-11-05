@@ -1,0 +1,49 @@
+ 2. The scoring is not what you planned for:
+  - Metric: scoring uses MAE only, so you can drop RMSE. Each metric gets a
+    skill score, S = 1 − MAE / MAE(30-yr avg), and the final Score is 100 × the
+    mean of the four skills. Write this as a function and use it on every fold.
+  - Official baselines:
+    - The 30-year average uses the fixed years 1989–2018, not "the last 30
+      training years".
+    - The trend line is fit through the last 30 years, not from 1970 onward.
+    - There's a third baseline: repeat each city's last valid value.
+  - Free reproducibility check: the organizers ran a practice fold (train up to
+    2010, predict 2011–2018). It gave CDD MAE of 213 for the 30-year average and
+    177 for the trend line. Add that fold and confirm you get the same numbers.
+  - More folds: two 7-year folds is thin evidence. Add 1997 and 2010 as extra
+    cutoffs.
+
+  3. Items you can now close or drop:
+  - Format check (Day 4): the format is city_id,year,metric,predicted_value.
+    city_id is the station ID, and all 5,880 rows are required.
+  - "Unclear submission requirements" feedback: that's resolved now. Replace it
+    with something concrete, like the trouble finding the format because the
+    Space page didn't load.
+  - Uncertainty intervals (Day 4): not required. Treat them as optional extra
+    value.
+  - SimpleImputer: you probably don't need an imputer at all.
+
+  4. Nothing in the plan aims at Reuse (25%) or Interoperability (20%). That's
+  45% of the rubric. Some cheap ideas:
+  - Write the forecaster as a small reusable function or module, e.g.
+    forecast(city_id, metric, cutoff), instead of code that only lives in the
+    notebook.
+  - Combine with an external source from a different agency, such as Census
+    population or NLCD imperviousness/tree canopy. Population-weighted CDD
+    exposure would feed straight into the Policy Idea.
+  - Pin the dataset version with load_dataset(..., revision="<commit>"), set
+    seeds, and cite the KiltHub DOIs.
+
+  5. Every row needs a prediction. A few cities don't have enough history and
+  won't be scored, but you still have to fill them. Plan a fallback, such as a
+  regional or nearest-neighbor mean.
+
+  6. Timeline: set up the HF dataset from the template on Day 2, not Day 6, and
+  submit early (up to 10 times a day). The live leaderboard only scores
+  2019–2021, and the winners are chosen on 2022–2025, so don't tune to the live
+  score.
+
+  Modeling idea for Day 3: fitting a separate 30-year trend per city is noisy.
+  Shrinking each city's slope toward a regional or national pooled slope, then
+  adding it to a recent 10–15-year mean, usually beats both baselines on
+  temperature and CDD. It's also easy to explain under Technical Creativity.
